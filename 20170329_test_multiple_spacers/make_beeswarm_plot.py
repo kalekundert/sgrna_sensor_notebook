@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import analysis_helpers as helpers
 from pprint import pprint
 
-class Analysis:
+class BeeSwarmPlot:
 
     def __init__(self):
         self.data = helpers.CleavageData('20170512_test_d1_d4.xlsx')
@@ -55,10 +55,10 @@ class Analysis:
 
 args = docopt.docopt(__doc__)
 
-analysis = Analysis()
+analysis = BeeSwarmPlot()
 fig = analysis.plot()
 
 fig.canvas.set_window_title(' '.join(sys.argv))
-#plt.savefig('test_multiple_spacers.svg')
+plt.savefig('test_multiple_spacers.svg')
 plt.show()
 
