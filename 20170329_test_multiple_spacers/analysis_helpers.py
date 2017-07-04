@@ -24,7 +24,9 @@ COLORS = {
 
 class CleavageData:
 
-    def __init__(self, path):
+    # Despite its name, '20170512_test_d1_d4.xlsx' contains data for all the 
+    # spacers I've ever tested.
+    def __init__(self, path='20170512_test_d1_d4.xlsx'):
         self.data = load_cleavage_data_from_xlsx(path)
         self.sensors, self.spacers = find_sensors_and_spacers(self.data)
 
