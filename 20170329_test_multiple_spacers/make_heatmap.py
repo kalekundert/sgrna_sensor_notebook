@@ -25,7 +25,7 @@ import numpy as np
 import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import analysis_helpers
+from sgrna_sensor import densiometry
 from color_me import ucsf
 from pprint import pprint
 
@@ -116,7 +116,7 @@ class SpacerHeatmap:
         ])
 
     def _plot_data(self):
-        df = analysis_helpers.calc_mean_change(self.df)
+        df = densiometry.calc_mean_change(self.df)
 
         if self.designs:
             designs = self.designs
@@ -150,7 +150,7 @@ class SpacerHeatmap:
         This is meant to illustrate which colors are significantly different 
         than the controls.
         """
-        df = analysis_helpers.calc_percent_change(self.df)
+        df = densiometry.calc_percent_change(self.df)
         controls = df[df.design.isin(['on', 'off'])]
         mu = controls.percent_change.mean()
         sig = controls.percent_change.std()
@@ -187,12 +187,12 @@ class LinearSegmentedNorm(mpl.colors.Normalize):
 
 if __name__ == '__main__':
     args = docopt.docopt(__doc__)
-    df = analysis_helpers.load_cleavage_data_from_xlsx_dir('densiometry/')
+    df = densiometry.load_cleavage_data_from_xlsx_dir('densiometry/')
 
     heatmap = SpacerHeatmap(df)
     heatmap.show_all_designs = args['--show-all-designs']
     if args['--output-size']:
         heatmap.fig_size = map(float, args['--output-size'].split('x'))
 
-    with analysis_helpers.plot_or_savefig(args['--output']):
+    with densiometry.plot_or_savefig(args['--output']):
         heatmap.plot()

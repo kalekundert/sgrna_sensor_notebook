@@ -53,10 +53,7 @@ def load_cleavage_data_from_xlsx(path):
     Index = namedtuple('Index', ['sensor', 'spacer', 'ligand', 'band'])
 
     row = 2  # Skip the header (indexing is from 1).
-    is_row_empty = lambda i: \
-            sheet.cell(row=i, column=PIXELS_REP_1).value is None and \
-            sheet.cell(row=i, column=PIXELS_REP_2).value is None and \
-            sheet.cell(row=i, column=PIXELS_REP_3).value is None
+    is_row_empty = lambda i: sheet.cell(row=i, column=BAND).value is None
 
     while not is_row_empty(row):
         spacer = sheet.cell(row=row, column=SPACER).value or spacer
@@ -68,7 +65,9 @@ def load_cleavage_data_from_xlsx(path):
         pixels = [sheet.cell(row=row, column=j).value for j in [5, 6, 7]]
         pixels = np.array([x for x in pixels if x is not None])
 
-        data[index] = pixels
+        if pixels.size:
+            data[index] = pixels
+
         row += 1
 
     return data
