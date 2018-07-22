@@ -18,25 +18,25 @@
      - 750 µL 2x β-galactosidase assay buffer.
 
    - Prepare 400 µL of 1x Y-PER
-     - 200 µL Y-PER
-     - 200 µL water
+     - 250 µL Y-PER
+     - 250 µL water
 
    - Aliquot each culture for the following purposes:
      - master mix:     400 µL in a tube
-     - debris control: 110 µL in a tube
+     - debris control: 120 µL in a tube
      - od measurement: 100 µL in a plate
 
    - Measure OD600.
 
    - Add the following to each reaction:
      - master mix:     400 µL WS
-     - debris control: 110 µL 1x Y-PER
+     - debris control: 120 µL 1x Y-PER
 
    - Start a timer and mix all reactions well.
    
    - Transfer the non-stopped reactions to the plate:
-     - master mix:     200 µL
-     - debris control: 200 µL
+     - master mix:     200 µL (reverse-pipet)
+     - debris control: 200 µL (reverse-pipet)
      - Use reverse-pipeting to avoid bubbles.
 
    - Split the stopped reactions between 3 tubes:
@@ -55,9 +55,8 @@
    - Meanwhile, measure A420 for the non-stopped 
      reactions and note the time.
 
-   - Transfer 200 µL of the supernatant of each 
-     stopped reaction to the plate.  Use 
-     reverse-pipeting to avoid bubbles.
+   - Transfer 200 µL (reverse-pipet) of the super-  
+     natant of each stopped reaction to the plate.  
 
    - Measure A420 for the stopped reactions.
 
