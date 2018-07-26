@@ -34,13 +34,13 @@ Start the day cultures:
 
 - Prepare {lb2} mL each of apo and holo media:
   
-  - {lb} mL LB
+  - {round_to_pipet(lb - 13/1000 * lb - lb/30)} mL LB
   - {lb} µL 100 mg/mL carbenicillin (Carb)
   - {lb} µL 34 mg/mL chloramphenicol (Chlor)
   - {10*lb} µL 100 µg/mL anhydroteracycline (ATc)
   - {lb} µL 1M IPTG
 
-  - Split into 2 {lb2} mL portions.
+  - Split into 2 {round_to_pipet(lb2 - lb2/30)} mL portions.
   - Add {theo} µL LB or 30 mM theophylline (in LB) 
     to the apo and holo portions, respectively.
 
