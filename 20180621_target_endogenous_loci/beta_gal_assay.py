@@ -21,7 +21,8 @@ p = dirty_water.Protocol()
 n = eval(args['<num_reactions>'] or '50')
 
 p += f"""\
-Make overnight cultures for all strains being tested.
+Make overnight cultures for all strains being 
+tested.
 """
 
 lb2 = with_extra(n/2)
@@ -40,12 +41,12 @@ Start the day cultures:
   - {lb} µL 1M IPTG
 
   - Split into 2 {lb2} mL portions.
-  - Add {theo} µL LB or 30 mM theophylline (in LB) to 
-    the apo and holo portions, respectively.
+  - Add {theo} µL LB or 30 mM theophylline (in LB) 
+    to the apo and holo portions, respectively.
 
-- For each reaction, inoculate 1 mL media with 4 µL 
-  overnight culture.  Also prepare 1 mL media with no 
-  cells, as a blank.
+- For each reaction, inoculate 1 mL media with 4 
+  µL overnight culture.  Also prepare 1 mL media 
+  with no cells, as a blank.
 """
 
 p += f"""\
@@ -61,16 +62,18 @@ Start the β-galactosidase assay:
   - {ws//2} µL 2x β-galactosidase assay buffer.
   - Aliquot 140 µL into PCR strip-tubes.
 
-- Aliquot 100 µL of each culture into a clear plate.
+- Aliquot 100 µL of each culture into a clear 
+  plate.
 
 - Measure OD600.
 
 - Add 100 µL WS to each reaction and mix well.
 
-  WS is very soapy, so you need to take care to avoid 
-  getting bubbles in the wells.  Reverse pipet to add 
-  the WS in the first place, then mix very carefully.  
-  Pop any bubbles with a hot needle.
+  WS is very soapy, so you need to take care to 
+  avoid getting bubbles in the wells.  Reverse 
+  pipet to add the WS in the first place, then mix 
+  very carefully.  Pop any bubbles with a hot 
+  needle.
 """
 
 p += f"""\
@@ -83,4 +86,4 @@ measurement to ensure good mixing.
 
 print(p)
 
-# vim: tw=53
+# vim: tw=50
