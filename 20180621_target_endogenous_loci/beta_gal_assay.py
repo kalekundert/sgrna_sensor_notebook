@@ -65,7 +65,9 @@ Start the β-galactosidase assay:
 - Aliquot 100 µL of each culture into a clear 
   plate.
 
-- Measure OD600.
+- Measure OD600.  Dilute as necessary to ensure 
+  that has well has OD600 > 0.2 (plate reader path 
+  length).
 
 - Add 100 µL WS to each reaction and mix well.
 
