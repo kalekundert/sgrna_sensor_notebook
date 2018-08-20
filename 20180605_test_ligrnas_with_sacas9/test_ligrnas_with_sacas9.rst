@@ -416,10 +416,10 @@ binding with the aptamer.
 
 References
 ==========
-.. [Nakade2017] :pubmed:`10.1080/21655979.2017.1282018`
-.. [Kleinstiver2015] :pubmed:`10.1038/nbt.3404`
-.. [Ran2015] :pubmed:`10.1038/nature14299`
-.. [Qi2013] :pubmed:`10.1016/j.cell.2013.02.022`
-.. [Vigouroux2018] :pubmed:`10.15252/msb.20177899`
+.. [Nakade2017] :doi:`10.1080/21655979.2017.1282018`
+.. [Kleinstiver2015] :doi:`10.1038/nbt.3404`
+.. [Ran2015] :doi:`10.1038/nature14299`
+.. [Qi2013] :doi:`10.1016/j.cell.2013.02.022`
+.. [Vigouroux2018] :doi:`10.15252/msb.20177899`
 
 

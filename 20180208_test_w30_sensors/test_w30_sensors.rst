@@ -289,4 +289,4 @@ experiments were done in 24-well blocks.
    
 References
 ==========
-.. [Zimmermann2000] :pubmed:`PMC1369946`
+.. [Zimmermann2000] :doi:`10.1017/S1355838200000169`

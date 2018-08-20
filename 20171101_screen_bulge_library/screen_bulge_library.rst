@@ -607,6 +607,6 @@ based on how the gel looked), so I'm going to try that.
 
 References
 ==========
-.. [Gietz2007] :pubmed:`10.1038/nprot.2007.15`
+.. [Gietz2007] :doi:`10.1038/nprot.2007.15`
 
 
