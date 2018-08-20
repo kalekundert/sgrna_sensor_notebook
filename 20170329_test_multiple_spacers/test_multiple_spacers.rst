@@ -658,7 +658,7 @@ These results aren't very accurate and don't inspire much confidence in the
 model.  In particular, gfp2 is predicted to be the most active spacer.
 
 Caveats
-=======
+-------
 - d9/on has the wrong sequence.  I would've been more worried about this if the 
   d9 designs had had poor cleavage, but they all had quite good cleavage.  The 
   makes the lack of a positive control less worrying (plus there were other 
@@ -680,20 +680,9 @@ Caveats
   confident in the results for the designs, I don't think repeating this 
   experiment is worth it.
 
-Figure
-======
-.. figure:: test_multiple_spacers.svg
 
-   Each point represents a different randomly chosen spacer.  The y-axis is the 
-   difference between the percent of the total DNA cleaved with and without  
-   theophylline.  Error bars represent 1 standard deviation.
-
-This plot nicely highlights that rxb 11,1 and mhf 30 are active with most 
-spacers.  mhf 30 has more consistent activity, while rxb 11,1 has a higher 
-ceiling.  mhf 37 appears to be broken with most of the spacers.  I don't think 
-this is true, I think we're just outside it's dynamic range because it often 
-has very little cleavage with or without ligand.
-
+References
+==========
 .. [Doench14] Doench et al. *Rational design of highly active sgRNAs for 
    CRISPR-Cas9-mediated gene inactivation.*  Nat Biotechnol (2014) 
    32:12:1262-1267.

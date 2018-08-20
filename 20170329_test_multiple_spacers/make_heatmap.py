@@ -18,6 +18,9 @@ Options:
     -A --show-all-designs
         Include all of the sgRNAs (including the controls) in the heatmap.  By 
         default, only rxb/11/1 and mhf/30 are included.
+
+    -L --no-label-spacers
+        Don't label the spacers.
 """
 
 import docopt
@@ -25,17 +28,21 @@ import numpy as np
 import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from pathlib import Path
 from sgrna_sensor import densiometry
 from color_me import ucsf
 from pprint import pprint
 
+DATA_DIR = Path(__file__).parent / 'densiometry'
+
 class SpacerHeatmap:
-    rows = 2
+    rows = 3
     designs = None
     all_designs = 'on', 'off', 'rxb 11,1', 'mhf 30', 'mhf 37'
     select_designs = 'rxb 11,1', 'mhf 30'
     show_all_designs = False
-    width_ratio = 30
+    label_spacers = True
+    width_ratio = 20
     fig_size = None
 
     def __init__(self, df):
@@ -55,9 +62,9 @@ class SpacerHeatmap:
         Decide which designs to include in the heatmap.  The decision is made 
         in such a way to the user can easily control the result.
         """
+        # Don't do anything if the user manually provided a list of designs to 
+        # show.
         if self.designs is not None:
-            # Don't do anything if the user manually provided a list of designs 
-            # to show.
             return
 
         # Otherwise, check a flag to see if we should include all the designs, 
@@ -82,7 +89,7 @@ class SpacerHeatmap:
     def _setup_axes(self):
         grid = mpl.gridspec.GridSpec(
                 self.rows, 2,
-                width_ratios=[self.width_ratio,1],
+                width_ratios=[self.width_ratio, 1],
         )
         self.ax = [
                 self.fig.add_subplot(grid[y,0])
@@ -117,6 +124,7 @@ class SpacerHeatmap:
 
     def _plot_data(self):
         df = densiometry.calc_mean_change(self.df)
+        df = densiometry.sort_by_activity(df, self.select_designs)
 
         if self.designs:
             designs = self.designs
@@ -138,11 +146,12 @@ class SpacerHeatmap:
             j0 = spacers_per_row * (i + 0)
             j1 = spacers_per_row * (i + 1)
 
-            self.ax[i].matshow(data[:,j0:j1], cmap=self.cmap, norm=self.norm)
-            self.ax[i].set_yticks(range(len(self.designs)))
+            self.ax[i].pcolor(data[:,j0:j1], cmap=self.cmap, norm=self.norm)
+            self.ax[i].set_yticks(0.5 + np.arange(len(self.designs)))
             self.ax[i].set_yticklabels(self.designs)
-            self.ax[i].set_xticks(range(spacers_per_row))
-            self.ax[i].set_xticklabels(spacers[j0:j1])
+            self.ax[i].set_xticks(0.5 + np.arange(spacers_per_row))
+            self.ax[i].set_xticklabels(spacers[j0:j1] if self.label_spacers else [])
+            self.ax[i].axis('image')
 
     def _plot_controls(self):
         """
@@ -151,7 +160,10 @@ class SpacerHeatmap:
         than the controls.
         """
         df = densiometry.calc_percent_change(self.df)
-        controls = df[df.design.isin(['on', 'off'])]
+        designs = df.index.get_level_values(level='design')
+        controls = df[designs.isin(['on', 'off'])]
+
+        n = len(controls)
         mu = controls.percent_change.mean()
         sig = controls.percent_change.std()
 
@@ -160,6 +172,7 @@ class SpacerHeatmap:
                 [x, x], [self.norm(mu+sig), self.norm(mu-sig)],
                 linestyle='-', marker='_', color=ucsf.dark_grey[0],
         )
+        print(f"{n} control measurements")
 
 
 class LinearSegmentedNorm(mpl.colors.Normalize):
@@ -187,12 +200,13 @@ class LinearSegmentedNorm(mpl.colors.Normalize):
 
 if __name__ == '__main__':
     args = docopt.docopt(__doc__)
-    df = densiometry.load_cleavage_data_from_xlsx_dir('densiometry/')
+    df = densiometry.load_cleavage_data_from_xlsx_dir(DATA_DIR)
 
     heatmap = SpacerHeatmap(df)
     heatmap.show_all_designs = args['--show-all-designs']
+    heatmap.label_spacers = not args['--no-label-spacers']
     if args['--output-size']:
-        heatmap.fig_size = map(float, args['--output-size'].split('x'))
+        heatmap.fig_size = [float(x) for x in args['--output-size'].split('x')]
 
-    with densiometry.plot_or_savefig(args['--output']):
+    with densiometry.plot_or_savefig(args['--output'], '20170329_test_multiple_spacers'):
         heatmap.plot()

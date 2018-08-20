@@ -13,8 +13,7 @@ Options
 """
 
 import docopt, copy
-import sys; sys.path.append('../../scripts')
-import design_mutagenesis_primers as mut
+import sgrna_sensor.primers as mut
 from nonstdlib import indices_from_str
 
 # Parse command-line arguments.
