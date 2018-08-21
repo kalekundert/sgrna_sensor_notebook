@@ -1,5 +1,11 @@
-expt = '20180720_b_subtilis_theo_growth_curve.xlsx'
+expt = 'plate_reader/20180720_b_subtilis_theo_growth_curve.xlsx'
 format = 'PerkinElmer'
+
+t_lim = [30, 240]
+gfp_lim = [15000, 40000]
+od_lim = [0.05, 0.15]
+fit_max_t = 0
+fit_max_od = 0.08
 
 [layout.on]
 '1000 µM' = ['B03', 'C03', 'D03']
