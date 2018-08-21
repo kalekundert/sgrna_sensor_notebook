@@ -407,11 +407,51 @@ Flow cytometry:
 
 .. figure:: 20180802_sadcas9_atc_toxicity.svg
 
-Cloning ligRNAs
----------------
-I decided to use g2 and r3 for a first round of experiments.  This is based 
-both on how well they repressed with the controls, and their predicted ΔG for 
-binding with the aptamer.
+Test ligRNAs
+------------
+I decided to use g2, g3, r1, and r3 for a first round of experiments.  This is 
+based both on how well they repressed with the controls, and their predicted ΔG 
+for binding with the aptamer.
+
+I prepared media without any aTc, based on the results from my experiments with 
+inducer concentrations.  Specifically, my apo media was LB + Carb + Chlor while 
+my holo media was LB + Carb + Chlor + theophylline.
+
+.. literalinclude:: 20180820_crispri_assay.txt
+
+Results
+=======
+The negative controls weren't transplanted effectively, which is to say that 
+they retained pretty good repression.  To compensate for this, I changed the 
+negative control, e.g. for the GFP constructs, to use the GFP channel for the 
+RFP off constructs (and vice versa for the RFP constructs).  This required that 
+I normalize each cell event by SSC rather than the non-targeted fluorescent 
+channel, but the data looks good and is completely interpretable.
+
+I see no evidence of the designed sensitivity to theophylline for any of the 
+spacers.  I believe that I tested enough spacers (all predicted to be 
+ligRNA-compatible) that I can rule out poor spacers as the cause of the lack of 
+activity.  Note that the ligRNA⁺ constructs have, if anything, a small amount 
+of activity in the wrong direction.  The strongest signal is sa/r3/rxb/11/1, at 
+about 1.5x, but the other rxb constructs have either no signal or switch in the 
+wrong direction (sa/r1).
+
+.. figure:: 20180817_sadcas9_test_ligrnas.svg
+
+If I wanted to get ligRNAs that worked with saCas9, I'd have to repeat the 
+screens.  Given that I do not see any value in having these constructs, I'm not 
+going to further pursue this direction.
+
+An interesting sidenote is that CRISPRi works well with sadCas9, but only if 
+it's not induced.  This may be a noteworthy result, since I wasn't able to find 
+any examples of saCas9 being used for CRISPRi in bacteria (although I didn't 
+look very hard).  It's also interesting to me that the expression level needs 
+to be turned down all the way, although I still get the same level of 
+repression in the end.  Is sadCas9 just a much more potent binder, and that 
+potent binding causes toxicity at higher expression levels?  If so, would there 
+be a way to get even tighter repression with saCas9?  Clearly simply increasing 
+expression is toxic, but maybe if the cause of the toxicity could be 
+determined, it could be alleviated.
 
 
 References
