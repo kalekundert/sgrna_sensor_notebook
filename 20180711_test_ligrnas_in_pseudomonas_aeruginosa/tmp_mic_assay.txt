@@ -1,0 +1,47 @@
+1. Grow 3 mL overnight cultures in LB at 37°C.
+
+2. Grow day cultures to log-phase.
+
+  - Subculture 20 µL into 1 mL Mueller-Hinton (MH2) 
+    media.
+  - Incubate at 37°C for 1h.
+
+3. Prepare 4x 500 µM (i.e. 2 mM) theophylline (theo):
+  
+  - 300 µL 30 mM theo (in MH2)
+  - 4200 µL Prepare fresh 30 mM theophylline.
+
+4. Prepare a 4x TMP titration:
+
+  - 2 mL 128 µg/mL TMP in first well.
+    - 2 mL MH2
+    - 4 µL 64 mg/mL TMP
+  - 1 mL MH2 media in remaining wells.
+  - Transfer 1 mL on each step.
+
+5. Prepare 2x subcultures:
+
+  - Measure day culture OD.
+  - Dilute to OD600 = 2 × 0.05 = 0.10.
+    - Prepare (N+1) mL of diluted subculture for a 
+      construct that will be used in N columns.
+
+6. Setup cultures with varying concentrations of TMP 
+   and theo in a 96 well plate:
+
+  - Add 50 µL 4x theo or 50 µL apo MH2 to each well.
+  - Add 50 µL 4x TMP titration to each well.
+  - Add 100 µL 2x subculture to each well.
+
+7. Record growth curves:
+  
+  - Incubate at 37°C with continuous shaking for 24h.
+  - Measure OD600 every 5 minutes.
+
+Notes
+=====
+- The volumes in this protocol are enough to fill a 
+  96-well plate.  As I only have one BSL2 plate 
+  reader to use, this is as much as I can do at once.
+
+vim: tw=53
