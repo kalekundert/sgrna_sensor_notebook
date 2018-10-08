@@ -6,10 +6,10 @@
     media.
   - Incubate at 37°C for 1h.
 
-3. Prepare 4x 500 µM (i.e. 2 mM) theophylline (theo):
+3. Prepare 4x 1 mM (i.e. 4 mM) theophylline (theo):
   
   - 300 µL 30 mM theo (in MH2)
-  - 4200 µL Prepare fresh 30 mM theophylline.
+  - 4200 µL MH2 media
 
 4. Prepare a 4x TMP titration:
 
