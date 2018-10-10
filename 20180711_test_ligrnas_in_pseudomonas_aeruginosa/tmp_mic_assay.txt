@@ -8,8 +8,8 @@
 
 3. Prepare 4x 1 mM (i.e. 4 mM) theophylline (theo):
   
-  - 300 µL 30 mM theo (in MH2)
-  - 4200 µL MH2 media
+  - 600 µL 30 mM theo (in MH2)
+  - 3900 µL MH2 media
 
 4. Prepare a 4x TMP titration:
 
@@ -22,7 +22,7 @@
 5. Prepare 2x subcultures:
 
   - Measure day culture OD.
-  - Dilute to OD600 = 2 × 0.05 = 0.10.
+  - Dilute to OD600 = 2 × 0.0025 = 0.005 [1].
     - Prepare (N+1) mL of diluted subculture for a 
       construct that will be used in N columns.
 
@@ -40,8 +40,20 @@
 
 Notes
 =====
-- The volumes in this protocol are enough to fill a 
-  96-well plate.  As I only have one BSL2 plate 
-  reader to use, this is as much as I can do at once.
+The volumes in this protocol are enough to fill a 
+96-well plate.  As I only have one BSL2 plate reader 
+to use, this is as much as I can do at once.
+
+[1] The canonical MIC protocol (Wiegand2008) calls 
+    for 5×10⁵ CFU/mL in the initial culture.  The 
+    proper thing to do would be to plate cells to 
+    determine the relationship between OD600 and 
+    CFU/mL.  Instead I found Kim2012, which claims 
+    that a culture of Pseudomonas aeruginosa at 
+    OD600=1.0 has 2×10⁸ CFU/mL.  If we accept this 
+    value, it implies that the our MIC cultures 
+    should start at an OD600 of 0.0025.
+
+
 
 vim: tw=53
