@@ -37,9 +37,9 @@ def load_data(toml_path):
 
     df = expt.kinetic[600]
     df = df.merge(layout, left_on='well', right_index=True)
-    return df
+    return meta, df
 
-def plot_data(df, explicit_controls=True):
+def plot_data(df, explicit_controls=True, ref_theo_mM=1):
     tmp_concs = df.groupby(['tmp_ug_mL'])
 
     fig, axes = plt.subplots(
@@ -53,7 +53,7 @@ def plot_data(df, explicit_controls=True):
 
         for key, sele in df_sgrnas.groupby(['sgrna', 'theo_mM']):
             sgrna, theo_mM = key
-            style = pick_style(sgrna, theo_mM, color_controls=True)
+            style = pick_style(sgrna, theo_mM, color_controls=True, standard_mM=ref_theo_mM)
             ax.semilogy(sele.minutes/60, sele.read, **style)
 
     y_labels = []
@@ -88,8 +88,8 @@ def plot_data(df, explicit_controls=True):
 if __name__ == '__main__':
     args = docopt.docopt(__doc__)
     toml = Path(args['<toml>'])
-    df = load_data(toml)
-    plot_data(df, args['--explicit-controls'])
+    meta, df = load_data(toml)
+    plot_data(df, args['--explicit-controls'], meta.get('ref_theo_mM', 1))
 
     if args['--output']:
         plt.savefig(args['--output'].replace('$', toml.stem))
