@@ -85,6 +85,7 @@ def plot_data(df, explicit_controls=True, ref_theo_mM=1):
 
     fig.tight_layout()
 
+
 if __name__ == '__main__':
     args = docopt.docopt(__doc__)
     toml = Path(args['<toml>'])

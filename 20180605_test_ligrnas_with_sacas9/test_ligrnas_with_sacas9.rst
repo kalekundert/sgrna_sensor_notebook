@@ -453,7 +453,6 @@ be a way to get even tighter repression with saCas9?  Clearly simply increasing
 expression is toxic, but maybe if the cause of the toxicity could be 
 determined, it could be alleviated.
 
-
 References
 ==========
 .. [Nakade2017] :doi:`10.1080/21655979.2017.1282018`
