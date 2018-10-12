@@ -267,11 +267,7 @@ I decided to titrate down to 4 mM and 2 mM as well, just to be more thorough.
 
 - Measure fluorescence by flow cytometry.
 
-.. figure:: 20180731_b_subtilis_theo_titration.svg
-
-    ligRNAs targeting GFP in B subtilis. Solid lines are with theophylline, 
-    either at 8 mM, 4 mM, or 2 mM (see y-axis label).  Dashed lines are without 
-    theophylline.
+Comments
 
 - As expected, increasing the concentration of theophylline does not improve 
   ligRNA⁻, as it is almost fully expressing even in the absence theophylline.
@@ -280,11 +276,24 @@ I decided to titrate down to 4 mM and 2 mM as well, just to be more thorough.
   
 Results
 =======
+
+.. figure:: 20180731_b_subtilis_theo_titration.svg
+
+    ligRNAs targeting GFP in B subtilis. Solid lines are with theophylline, 
+    either at 8 mM, 4 mM, or 2 mM (see y-axis label).  Dashed lines are without 
+    theophylline.
+
 I don't think either ligRNA is good enough to publish.  
 
-My two options, if I don't want to abandon this system completely, are to try a 
-weaker GFP promoter or a constitutive Cas9 promoter.  In either case, I'll have 
-to ask the Gross lab for a bunch of plasmids and strains.
+..
+   I asked the Gross lab if Cas9 expression could be increased by increasing 
+   xylose, and they pointed me to I could try increasing Cas9 expression by 
+   using a constitutive 
+
+.. 
+   My two options, if I don't want to abandon this system completely, are to 
+   try a weaker GFP promoter or a constitutive Cas9 promoter.  In either case, 
+   I'll have to ask the Gross lab for a bunch of plasmids and strains.
 
 References
 ==========
