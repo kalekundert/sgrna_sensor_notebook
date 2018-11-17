@@ -42,7 +42,12 @@
 
    - Discard supernatant.
 
-5. Process the next set cultures (see table below):
+5. Process the next set of cultures according to the 
+   table below:
+
+   no GFP: wildtype MG1655 (no GFP/RFP)
+   controls: on & off, apo→holo & holo→apo
+   ligRNAs: rxb/11/1 & mhf/30, apo→holo & holo→apo
 
    ───────────────────────────────────────────────
                                    Add         Add
@@ -64,9 +69,6 @@
    controls  4      32:00
    ligRNAs   4      32:00
    ───────────────────────────────────────────────
-   no GFP: wildtype MG1655 (no GFP/RFP)
-   controls: on & off, apo→holo & holo→apo
-   ligRNAs: rxb/11/1 & mhf/30, apo→holo & holo→apo
 
    - Place the 4 tubes containing the cell pellets 
      diagonally in a tube rack.
