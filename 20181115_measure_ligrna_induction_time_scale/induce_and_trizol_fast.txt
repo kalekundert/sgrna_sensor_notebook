@@ -2,10 +2,10 @@
    for each construct (on, off, rxb/11/1, mhf/30).
 
 2. Grow each culture with and without theophylline, 
-   while inducing Cas9 with aTC.
+   while inducing Cas9 with aTC (8 total cultures).
 
-   - Subculture 40 µL of each overnight into 10 mL 
-     apo media and 10 mL holo media.
+   - Subculture 36 µL of each overnight into 10 mL 
+     apo media and 9 mL holo media.
  
    - Also subculture 4 µL of wildtype MG1655 (no 
      GFP/RFP) into 1 mL apo media.
@@ -14,24 +14,23 @@
 
 3. Get ready to take timepoints:
 
-   - Label 57 tubes (one for each of the conditions 
-     listed in the table below).
-
-   - Detach the lid from each tube.  Leave enough of 
-     the stalk to allow the tube to rest on top of 
-     its neighbor when in the centrifuge.  This makes 
-     the tubes easier to remove. 
+   - Label 57 1.5 mL tubes (one for each of the 
+     conditions listed in the table below).
 
    - Fill columns 1-12 in a 96-well block with 1.1 mL 
      apo media in rows A+E, and 1.1 mL holo media in 
      rows C+G.  Pre-warm the block to 37°C.
 
-   - Have a waste beaker ready.
+   - Prepare a workspace in the fume hood:
 
-   - Have a 8-channel P1000 ready.
-
-   - Have ready two boxes of P1000 tips, with the 
-     tips only in every-other row.
+     - Benchtop centrifuge
+     - Thermomixer set to 37°C
+     - Waste beaker (for media)
+     - Container for TRIzol waste
+     - 8-channel P1000
+     - Three boxes of P1000 tips, two with tips only 
+       in every other row
+     - Wipe surface with ethanol and RNaseZap
 
 4. Pellet all the day cultures.
   
@@ -40,7 +39,9 @@
 
    - Pellet at 16,000g for 30s.
 
-   - Discard supernatant.
+   - Discard supernatant.  One or two sharp downward 
+     shakes was usually enough to get the last bit of 
+     media out.
 
 5. Process the next set of cultures according to the 
    table below:
@@ -71,12 +72,11 @@
    ───────────────────────────────────────────────
 
    - Place the 4 tubes containing the cell pellets 
-     diagonally in a tube rack.
+     diagonally in the thermomixer (not shaking).
 
-   - Place 4 empty 2 mL tubes diagonally in a tube 
-     rack.  Fill each of these tubes with 1.2 mL 
-     TRIzol.  Using 2 mL tubes allows for more 
-     aggressive and faster pipetting.
+   - Fill 4 tubes (arranged diagonally in a tube 
+     rack) with 1.2 mL TRIzol each.  Use 2 mL tubes 
+     to allow for faster pipetting.
 
    - Start a timer.
 
@@ -89,20 +89,22 @@
    - If you have enough time, start the next set of 
      cultures.
 
-   - 50s before the desired timepoint:
+   - 1 minute before the desired timepoint:
 
      ───────────────────────────────────────
-     Timer  Delta  Task
+     Countdown  Task   
      ───────────────────────────────────────
-      0:27   0:27  Pellet at 16,000g for 15s
-      0:40   0:13  Decant supernatant
-      0:50   0:10  Add 1 mL TRIzol
+          1:00  Load centrifuge.
+          0:52  Pellet at 16,000d for 15s
+          0:25  Decant supernatant
+          0:00  Add 1 mL TRIzol
      ───────────────────────────────────────
 
-6. Finish the RNA extractions.
+6. Store the cell extracts at 4°C overnight.
 
-   - Let each culture incubate in TRIzol for at least 
-     5 min.
+7. Finish the RNA extractions.
+
+   - Label 57 clean 1.5 mL tubes.
 
    - Add 200 µL chloroform.
  
@@ -128,7 +130,7 @@
 
    - Carefully pipet off all supernatant.
 
-   - Resuspend pellet in 70% EtOH.
+   - Resuspend pellet in 1 mL 70% EtOH.
 
    - Vortex briefly
 
@@ -138,9 +140,9 @@
 
    - Air dry for 10 min.
 
-   - Resuspend RNA in 10 µL water.
+   - Resuspend RNA in 30 µL water.  
 
 8. Measure the RNA concentration of each sample using 
-the Nanodrop.
+   the Nanodrop.  Expected yield: ~600±150 ng/µL.
 
 vim: tw=53
