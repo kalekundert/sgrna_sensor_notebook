@@ -4,7 +4,7 @@
 2. Grow each culture with and without theophylline, 
    while inducing Cas9 with aTC (8 total cultures).
 
-   - Subculture 36 µL of each overnight into 10 mL 
+   - Subculture 36 µL of each overnight into 9 mL 
      apo media and 9 mL holo media.
  
    - Also subculture 4 µL of wildtype MG1655 (no 
@@ -84,10 +84,8 @@
      P1000) in media opposite of the kind (e.g.  
      apo/holo) it was grown up in.
 
-   - Move the 4 tubes to the centrifuge.
-
-   - If you have enough time, start the next set of 
-     cultures.
+   - If you have 3 min before the next timepoint, 
+     start the next set of cultures.
 
    - 1 minute before the desired timepoint:
 
@@ -95,7 +93,7 @@
      Countdown  Task   
      ───────────────────────────────────────
           1:00  Load centrifuge.
-          0:52  Pellet at 16,000d for 15s
+          0:52  Pellet at 16,000g for 15s
           0:25  Decant supernatant
           0:00  Add 1 mL TRIzol
      ───────────────────────────────────────
