@@ -31,7 +31,7 @@ Start day cultures:
 
 - Thaw 50 mL each of apo and holo media.
 
-- Subculture 46 µL of each overnight into 11.5 mL
+- Subculture 44 µL of each overnight into 11 mL
   {before} media.
 
 - Subculture 4 µL of each overnight into 1 mL
@@ -46,16 +46,16 @@ Start day cultures:
 protocol += f"""\
 Get ready to take timepoints:
 
-- Label 45 1.5 mL tubes (one for each of the 
+- Label 41 1.5 mL tubes (one for each of the 
   conditions listed in the table below).
 
-- Fill columns 1-12 and rows A,C,E,G of a 96-well 
-  block with 1.1 mL {after} media.  Pre-warm the 
+- Fill 8 columns of a 96-well block with 1.1 mL 
+  {after} media in every other row.  Pre-warm the 
   block to 37°C.
 
 - Prepare a workspace in the fume hood:
   - Benchtop centrifuge
-  - 37°C block with at least 44 slots.
+  - 37°C block with at least 40 slots.
   - Waste beaker (for media)
   - Container for TRIzol waste
   - 8-channel P1000
@@ -71,13 +71,13 @@ protocol += f"""\
 Resuspend each sample (except for the 0:00 
 timepoints, see table below) in {after} media:
 
-- Pipet 1 mL of each culture into a properly 
+- Pipet 1 mL of each day culture into a properly 
   labeled tube.
 
 - Pellet at 16,000g for 30s.
 
 - Discard supernatant.  One or two sharp downward 
-  shakes was usually enough to get the last bit of 
+  shakes is usually enough to get the last bit of 
   media out.
 
 - Place the pellets in the 37°C block.
@@ -85,33 +85,31 @@ timepoints, see table below) in {after} media:
 - Start a timer.
 
 - Use a multichannel pipet to simultaneously 
-  resuspend all samples for the same timepoint:
+  resuspend all samples for the same timepoint.
 
   - Do the lastest timepoints first and the 
     earliest timepoints last.
 
   - Aim for 0:30 between each timepoints.
 
-───────────────────────────────────────────────────────────
-                             Switch      Pellet         Add
-Sample    N  Timepoint        Media       Cells      TRIzol
-───────────────────────────────────────────────────────────
+─────────────────────────────────────────────────────
+                           Switch    Pellet       Add
+Sample    N  Timepoint      Media     Cells    TRIzol
+─────────────────────────────────────────────────────
 {sample:8s}  4      30:00
-{sample:8s}  4      25:20
-{sample:8s}  4      21:00
-───────────────────────────────────────────────────────────
-{sample:8s}  4      17:00
-{sample:8s}  4      13:20
-{sample:8s}  4      10:00
-───────────────────────────────────────────────────────────
-{sample:8s}  4       7:00
-{sample:8s}  4       4:20
+{sample:8s}  4      24:30
+{sample:8s}  4      19:30
+{sample:8s}  4      15:00
+─────────────────────────────────────────────────────
+{sample:8s}  4      11:00
+{sample:8s}  4       7:30
+{sample:8s}  4       4:30
 {sample:8s}  4       2:00
-───────────────────────────────────────────────────────────
-apo       4       0:00          N/A         N/A
-holo      4       0:00          N/A         N/A
-no GFP    1       0:00          N/A         N/A
-───────────────────────────────────────────────────────────
+─────────────────────────────────────────────────────
+apo       4       0:00        N/A       N/A
+holo      4       0:00        N/A       N/A
+no GFP    1       0:00        N/A       N/A
+─────────────────────────────────────────────────────
 """
 
 protocol += f"""\
@@ -138,7 +136,7 @@ don't want to continue all the way to end.
 protocol += f"""\
 Finish the RNA extractions.
 
-- Label 45 clean 1.5 mL tubes.
+- Label 41 clean 1.5 mL tubes.
 
 - Add 200 µL chloroform.
 
@@ -177,6 +175,9 @@ precipitation:
 - Air dry for 10 min.
 
 - Resuspend RNA in 10 µL water.  
+
+  - Pipet to mix, then incubate at 50°C with 
+    intermittent gentle vortexing.
 """
 
 protocol += f"""\
