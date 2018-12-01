@@ -11,7 +11,7 @@
    
    - Thaw 50 mL each of apo and holo media.
    
-   - Subculture 44 µL of the ligRNA overnight into 
+   - Subculture 88 µL of the ligRNA overnight into 
      22 mL apo media and 22 mL holo media.
    
    - Subculture 4 µL of the "no GFP" control into 1 
@@ -24,10 +24,10 @@
    
 3. Get ready to take timepoints:
    
-   - Label 41 1.5 mL tubes (one for each of the 
+   - Label 39 1.5 mL tubes (one for each of the 
      conditions listed in the table below).
    
-   - Fill 8 columns of a 96-well block with 1.1 mL 
+   - Fill 9 columns of a 96-well block with 1.1 mL 
      media in every other row, alternating between 
      apo and holo (2 rows each).  Pre-warm the block 
      to 37°C.
@@ -35,7 +35,7 @@
    - Prepare a workspace in the fume hood:
      - Wipe surface with ethanol and RNaseZap
      - Benchtop centrifuge
-     - 37°C block with at least 40 slots.
+     - 37°C block with at least 38 slots.
      - Tube racks
      - 8-channel P1000
      - Three boxes of P1000 tips, two with tips only 
@@ -44,7 +44,8 @@
      - Waste container (for TRIzol)
    
    - Just before starting the next step:
-     - Fill a reservoir with 50 mL TRIzol
+     - Fill a glass dish with 50 mL TRIzol.
+     - Arrange the labeled tubes in the 37°C block.
    
 4. Resuspend the apo and holo day cultures (except 
    the 0:00 timepoint, see table below) in both apo 
@@ -72,32 +73,32 @@
 
      - Aim for 0:30 between each timepoints.
    
-   ──────────────────────────────────────────────
-                     Switch     Pellet        Add
-   Timepoint  N       Media      Cells     TRIzol
-   ──────────────────────────────────────────────
-       30:00  4                         
-       25:20  4                         
-       21:00  4                         
-   ──────────────────────────────────────────────
-       17:00  4                         
-       13:20  4                         
-       10:00  4                         
-   ──────────────────────────────────────────────
-        7:00  4                         
-        4:20  4                         
-        2:00  4                         
-   ──────────────────────────────────────────────
-        0:00  4         N/A        N/A   
-    "no GFP"  1         N/A        N/A   
-   ──────────────────────────────────────────────
+   ────────────────────────────────────────────────────────────
+                     Switch      Pellet              Add TRIzol
+   Timepoint  N       Media       Cells      target      actual
+   ────────────────────────────────────────────────────────────
+       30:00  4                          
+       25:20  4                          
+       21:00  4                          
+   ────────────────────────────────────────────────────────────
+       17:00  4                          
+       13:20  4                          
+       10:00  4                          
+   ────────────────────────────────────────────────────────────
+        7:00  4                          
+        4:20  4                          
+        2:00  4                          
+   ────────────────────────────────────────────────────────────
+        0:00  2         N/A         N/A   
+    "no GFP"  1         N/A         N/A   
+   ────────────────────────────────────────────────────────────
    
 5. Stop each timepoint as appropriate:
    
    ───────────────────────────────────────
    Countdown  Task   
    ───────────────────────────────────────
-        1:00  Load centrifuge.
+        1:05  Load centrifuge.
         0:52  Pellet at 16,000g for 15s
         0:25  Decant supernatant; arrange
               diagonally in tube rack
@@ -107,9 +108,9 @@
 6. Store the cell extracts at 4°C overnight, if you 
    don't want to continue all the way to end.
    
-   Finish the RNA extractions.
+7. Finish the RNA extractions.
    
-   - Label 41 clean 1.5 mL tubes.
+   - Label 39 clean 1.5 mL tubes.
    
    - Add 200 µL chloroform.
    
@@ -121,7 +122,7 @@
      pink) to a clean tube, taking care to not 
      transfer any of the organic phase.
    
-7. Concentrate and purify the RNA by ethanol 
+8. Concentrate and purify the RNA by ethanol 
    precipitation:
    
    - Add 1 µL GlycoBlue (Invitrogen AM9516) to each 
@@ -150,7 +151,7 @@
      - Incubate at 50°C with intermittent gentle 
        vortexing.
    
-8. Measure the RNA concentration of each sample using 
+9. Measure the RNA concentration of each sample using 
    the Nanodrop.  Expected yield: ~300±125 ng/µL.
 
 vim: tw=53
