@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 
+import bio96
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.offsetbox
 import matplotlib.lines
-from sgrna_sensor.plate import load_plate
 from sgrna_sensor.style import pick_color, pick_style, FoldChangeLocator
 
 def parse_labels():
-    meta = load_plate('20181002_sgrna_qpcr.toml')
-    labels = pd.DataFrame(meta['well']).T
-    return labels
+    df, opt = bio96.load('20181002_sgrna_qpcr.toml')
+    df = df.set_index('well')
+    return df
 
 def pick_style(promoter, primers):
     from color_me import ucsf

@@ -4,23 +4,23 @@
 Plot the standard curves for the various primer pairs we used for qPCR.
 
 Usage:
-    std_curves.py
+    20181004_std_curves.py
 
-The standard curves were done in two experiments:
-- 20181004_std_curve_ligrna.toml
-- 20181007_std_curve_gfp.toml
+The standard curves were done in two experiments.  The plate layouts for both 
+experiments are described in: `20181004_std_curves.toml`
 
 In this plot, we want to merge the data from the two experiments.  The 16S 
 primers were actually tested in both experiments, and we want to use the data 
 from the second experiment.
 """
 
+import bio96
+import json
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.offsetbox
 from scipy.stats import linregress
-from sgrna_sensor.plate import load_plate
 from sgrna_sensor.style import pick_color, pick_style
 from sgrna_sensor.latex import render_latex_table
 from color_me import ucsf
@@ -29,9 +29,9 @@ from more_itertools import one
 pd.set_option('display.max_rows', 100)
 
 keys = [
+        'gfp',
         '30',
         '11',
-        'gfp',
         '16s',
 ]
 styles = {
@@ -52,53 +52,56 @@ latex_labels = {
         '11':   r'ligRNA\textsuperscript{−}',
 }
 
-def load_labels(toml_path):
-    meta = load_plate(toml_path)
-    labels = pd.DataFrame(meta['well']).T
-    return labels, meta['paths']['default']
-
 def load_pcr_data(toml_path):
-    labels, xlsx_path = load_labels(toml_path)
 
-    df = pd.read_excel(xlsx_path, sheet_name='Amplification Data', header=43)
-    df = df.merge(labels, left_on='Well Position', right_index=True)
-    df = df.query('discard == False')
+    def pcr_from_xlsx(xlsx_path):
+        return pd.read_excel(
+                xlsx_path, sheet_name='Amplification Data', header=43)
 
+    df, opt = bio96.load(
+            toml_path,
+            pcr_from_xlsx,
+            {'well': 'Well Position'},
+    )
+    df = drop_outliers(df)
     return df
 
 def load_ct_data(toml_path):
-    labels, xlsx_path = load_labels(toml_path)
 
-    data = pd.read_excel(xlsx_path, sheet_name='Results', header=43)
-    data = data.dropna(thresh=3)
-    data = data.dropna(axis='columns', how='all')
-    data.index = data['Well Position']
+    def ct_from_xlsx(xlsx_path):
+        ct = pd.read_excel(xlsx_path, sheet_name='Results', header=43)
+        ct = ct.dropna(thresh=3)
+        ct = ct.dropna(axis='columns', how='all')
+        return ct
 
-    df = labels.merge(data, left_index=True, right_index=True) 
-    df = df.query('discard == False')
-
+    df, opt = bio96.load(
+            toml_path,
+            ct_from_xlsx,
+            {'well': 'Well Position'},
+    )
+    df = drop_outliers(df)
     return df
 
 def load_melt_data(toml_path):
-    labels, xlsx_path = load_labels(toml_path)
+    def melt_from_xlsx(xlsx_path):
+        return pd.read_excel(
+                xlsx_path, sheet_name='Melt Curve Raw Data', header=43)
 
-    df = pd.read_excel(xlsx_path, sheet_name='Melt Curve Raw Data', header=43)
-    df = df.merge(labels, left_on='Well Position', right_index=True)
+    df, opt = bio96.load(
+            toml_path,
+            melt_from_xlsx,
+            {'well': 'Well Position'},
+    )
+    df = drop_outliers(df)
+    return df
+
+def drop_outliers(df):
+    n0 = len(df)
     df = df.query('discard == False')
-
+    if len(df) != n0:
+        print(f"Dropped {n0-len(df)}/{n0} outliers")
     return df
 
-
-def merge_expts(df_ligrna, df_gfp):
-    """
-    Combine the two data sets we have, keeping only the 16S data from the 
-    second experiment.  This processing step is extremely specific to this 
-    particular data.
-    """
-    df = pd.concat([df_gfp, df_ligrna[df_ligrna.primers != '16s']], sort=False)
-    df.set_index(['primers', 'dilution', 'replicate'], inplace=True)
-    df.sort_index(inplace=True)
-    return df
 
 def plot_ct_fits(df):
     fig, ax = plt.subplots(figsize=(3.1, 2.1))
@@ -106,8 +109,10 @@ def plot_ct_fits(df):
     artists = {}
 
     for key in keys:
-        x = df.loc[key].index.get_level_values(level='dilution')
-        y = df.loc[key]['CT'].astype(float)
+        q = df.query('primers == @key')
+
+        x = q['dilution']
+        y = q['CT'].astype(float)
         x_log = np.log10(x)
 
         m, b, r, p, err = linregress(x_log, y)
@@ -119,6 +124,7 @@ def plot_ct_fits(df):
                 'b': b,
                 'r2': r**2,
                 'efficiency': 100 * (10**(1/m) - 1),
+                'factor': 10**(1/m),
         }
 
         ax.plot(x, y, '+', label='_', **styles[key])[0]
@@ -137,6 +143,13 @@ def plot_ct_fits(df):
     ax.grid(True)
     ax.legend(loc='best', prop=dict(size=8))
 
+    ## JSON
+
+    with open('20181004_std_curves.json', 'w') as file:
+        json.dump(fits, file)
+
+    ## LaTeX
+
     def emph_if_bad(sgrna, param, unit=''):
         precision = {'r2': '.4f', 'efficiency': '.1f'}
         good_fmt = '{:%s}%s' % (precision.get(param, '.2f'), unit)
@@ -151,7 +164,7 @@ def plot_ct_fits(df):
             fmt = good_fmt if x > 0.98 else bad_fmt
 
         elif param == 'efficiency':
-            fmt = good_fmt if 1.9 < x < 2.1 else bad_fmt
+            fmt = good_fmt if 90 < x < 110 else bad_fmt
 
         else:
             fmt = good_fmt
@@ -159,9 +172,9 @@ def plot_ct_fits(df):
         return fmt.format(x)
 
     fig.tight_layout(pad=0)
-    fig.savefig('20181007_std_curve_fits.svg')
+    fig.savefig('20181004_std_curve_fits.svg')
 
-    render_latex_table('20181007_std_curve_fits.tex', {**locals(), **globals()})
+    render_latex_table('20181004_std_curve_fits.tex', {**locals(), **globals()})
 
 def plot_curves(ct, pcr, melt):
     fig, axes = plt.subplots(
@@ -171,6 +184,10 @@ def plot_curves(ct, pcr, melt):
     )
     fits = {}
     artists = {}
+
+    ct = ct.set_index(['primers'])
+    pcr = pcr.set_index(['primers'])
+    melt = melt.set_index(['primers'])
 
     for key, ax in zip(keys, axes[0]):
         # Label the plots:
@@ -217,22 +234,14 @@ def plot_curves(ct, pcr, melt):
         ax.set_xlabel("Temperature (°C)")
 
     fig.tight_layout(pad=0, w_pad=0.5, h_pad=0.5)
-    fig.savefig('20181007_std_curve_pcr_melt.svg')
+    fig.savefig('20181004_std_curve_pcr_melt.svg')
     plt.show()
 
 
 if __name__ == '__main__':
-    ct_ligrna = load_ct_data('20181004_std_curve_ligrna.toml')
-    ct_gfp = load_ct_data('20181007_std_curve_gfp.toml')
-    ct = merge_expts(ct_ligrna, ct_gfp)
-
-    pcr_ligrna = load_pcr_data('20181004_std_curve_ligrna.toml')
-    pcr_gfp = load_pcr_data('20181007_std_curve_gfp.toml')
-    pcr = merge_expts(pcr_ligrna, pcr_gfp)
-
-    melt_ligrna = load_melt_data('20181004_std_curve_ligrna.toml')
-    melt_gfp = load_melt_data('20181007_std_curve_gfp.toml')
-    melt = merge_expts(melt_ligrna, melt_gfp)
+    ct = load_ct_data('20181004_std_curves.toml')
+    pcr = load_pcr_data('20181004_std_curves.toml')
+    melt = load_melt_data('20181004_std_curves.toml')
 
     plot_ct_fits(ct)
     plot_curves(ct, pcr, melt)
