@@ -61,11 +61,17 @@ class BarPlot:
         self._setup_figure()
         self._plot_controls()
         self._plot_data()
-        plt.tight_layout()
+        plt.tight_layout(pad=0, h_pad=0)
         return self.fig
 
     def _setup_figure(self):
-        self.fig, self.axes = plt.subplots(2, sharex=True, figsize=self.fig_size)
+        self.fig, self.axes = plt.subplots(
+                nrows=2,
+                ncols=1,
+                sharex=True,
+                figsize=self.fig_size,
+        )
+        self.axes[0].set_xlabel('')
 
     def _plot_controls(self):
         df = densiometry.calc_percent_change(self.df)
@@ -95,12 +101,17 @@ class BarPlot:
                         self.colors[design],
                 )
 
+            # If a figure size was given, also try to take some steps to ensure 
+            # a more regular/representative size.  In particular, use shorter 
+            # labels and don't redundant axes.
+
             y_max = self.y_max[design]
-            self.axes[i].set_ylabel('Δ cleavage (%)')
+            self.axes[i].set_ylabel('Δ cleavage (%)' if not self.fig_size else 'Δ (%)')
             self.axes[i].set_ylim((0, y_max))
             self.axes[i].set_yticks([0, y_max//2, y_max])
 
-            self.axes[i].set_xlabel('spacer')
+
+            self.axes[i].set_xlabel('spacer' if i == 1 else '')
             self.axes[i].set_xlim((-3, j+1))
             self.axes[i].set_xticks(range(-2, j+1))
             self.axes[i].set_xticklabels(
@@ -125,8 +136,6 @@ class BarPlot:
         axes.plot(x[1], y_err[1], color=color, **self.err_marker_style)
 
         return y[1] > self.success_cutoff
-
-
 
 if __name__ == '__main__':
     args = docopt.docopt(__doc__)

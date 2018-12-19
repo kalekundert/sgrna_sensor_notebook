@@ -4,7 +4,7 @@
 Plot activities measured in the β-galactosidase assay.
 
 Usage:
-    miller_units.py [<layout.toml>...] [-o PREFIX] [-PFbB]
+    miller_units.py [<layout.toml>...] [-o PREFIX] [-PFbB] [--figure-mode]
 
 Arguments:
     <layout.toml>
@@ -34,6 +34,10 @@ Options:
     -B --bars-only
         Only show the bar plots.  This is useful if you already know that all 
         the fits make sense.
+
+    --figure-mode
+        Tweak a number of visual parameters to get a plot suitable for the 
+        paper.
 
 Configuration:
     Below is a list of the keys that are understood in the configuration file:
@@ -160,9 +164,10 @@ class Reaction:
         self.label = self.meta.get('label', 
                 ' '.join(self.meta[x] for x in self.keys))
 
-        df = expt['data'].kinetic[420]
+        df = expt['data'].kinetic[420]\
+                .query('well == @well').reset_index(drop=True)
         self.t_min = self.raw_t_min = df['minutes']
-        self.a420 = self.raw_a420 = df[well]
+        self.a420 = self.raw_a420 = df['read']
         self.od600 = self.raw_od600 = expt['data'].reads[600][well]
         self.vol_mL = self.meta['culture_volume_uL'] / 1000
 
@@ -290,7 +295,7 @@ def load_expt(toml_path):
 
     def do_load_paths(toml_path):
         toml_path = Path(toml_path).resolve()
-        expt = toml.load(toml_path)
+        expt = toml.load(str(toml_path))
         expt['toml_path'] = toml_path
 
         # Resolve the path the actual data.
@@ -394,14 +399,20 @@ def miller_units(t_min, a420, od600, vol_mL):
     m, b = np.polyfit(t_min, a420, 1)
     return 1000 * m / (od600 * vol_mL), (m, b)
 
-def plot_fits(rxns, stem, subtract_intercept=False):
+def plot_fits(rxns, stem, subtract_intercept=False, figure_mode=False):
     rows, cols = load_keys(rxns)
 
-    size_in = 3
+    if figure_mode:
+        subtract_intercept = True
+
+    size_in = 1.5 if figure_mode else 3.0
     fig_size_in = size_in * len(cols), size_in * len(rows)
     fig, axes = plt.subplots(
             len(rows), len(cols),
-            figsize=fig_size_in, sharex=True, squeeze=False,
+            figsize=fig_size_in,
+            squeeze=False,
+            sharex=True,
+            sharey=figure_mode,
     )
     max_t = 0
     min_a420 = {x: inf for x in itertools.product(rows.values(), cols.values())}
@@ -431,15 +442,24 @@ def plot_fits(rxns, stem, subtract_intercept=False):
         if rxn.miller != nan:
             ax.plot(t, rxn.linear_fit(t) - b, **fit_style)
 
-        min_a420[row,col] = min(min_a420[row,col], min(rxn.a420 - b))
-        max_a420[row,col] = max(max_a420[row,col], max(rxn.a420 - b))
-        max_t = max(max_t, max(rxn.t_min))
+        if figure_mode:
+            min_a420[row,col] = 0
+            max_a420[row,col] = 1
+        else:
+            min_a420[row,col] = min(min_a420[row,col], min(rxn.a420 - b))
+            max_a420[row,col] = max(max_a420[row,col], max(rxn.a420 - b))
+
+        if figure_mode:
+            max_t = 20
+        else:
+            max_t = max(max_t, max(rxn.t_min))
 
         label = '\n'.join(textwrap.wrap(
             f'{rxn.meta[row_key]} {rxn.meta[col_key]}',
             width=9, break_long_words=False,
         ))
-        ax.legend(title=label, loc='upper left')
+        if not figure_mode:
+            ax.legend(title=label, loc='upper left')
 
     for i, row in enumerate(axes):
         for j, ax in enumerate(row):
@@ -447,14 +467,25 @@ def plot_fits(rxns, stem, subtract_intercept=False):
 
     for ax in axes[-1,:]:
         ax.set_xlabel('time (min)')
-    for ax in axes[:,0]:
+    for ax in axes[:,-1 if figure_mode else 0]:
+        box = dict(facecolor='yellow')
         ax.set_ylabel('ΔA420' if subtract_intercept else 'A420')
     for ax in axes.flat:
         ax.set_xlim(0, max_t)
 
+    if figure_mode:
+        for ax in axes.flat:
+            ax.yaxis.set_tick_params(left=False, labelleft=False)
+        for ax in axes[:,-1]:
+            ax.yaxis.set_tick_params(right=True, labelright=True)
+            ax.yaxis.set_label_position("right")
+
     finalize_plot(fig, stem, 'fits')
 
-def plot_miller_units(rxns, stem):
+def plot_miller_units(rxns, stem, figure_mode=False):
+    if figure_mode:
+        return
+
     num_spacers = len({rxn.spacer for i, rxn in iter_reactions(rxns)})
     fig, axes = plt.subplots(4, 1, figsize=(1 + 3 * num_spacers, 8))
     style = dict(linewidth=5)
@@ -500,7 +531,7 @@ def plot_miller_units(rxns, stem):
 
     finalize_plot(fig, stem, 'miller')
 
-def plot_fold_changes(rxns, stem):
+def plot_miller_units(rxns, stem, figure_mode=False):
     primary_keys, secondary_keys = load_keys(rxns)
     n1, n2 = len(primary_keys), len(secondary_keys)
 
@@ -523,9 +554,68 @@ def plot_fold_changes(rxns, stem):
                   .append(rxn)
 
     for key in replicates:
-        apos = [x.miller for x in replicates[key][False]]
-        holos = [x.miller for x in replicates[key][True]]
-        fold_changes = [holo / apo for apo, holo in zip(apos, holos)]
+        apos = np.array([x.miller for x in replicates[key][False]])
+        holos = np.array([x.miller for x in replicates[key][True]])
+
+        i = primary_keys[key[0]]
+        j = secondary_keys[key[1]]
+
+        x = i * (len(primary_keys) + 1) + j
+        x_apo = 2 * x
+        x_holo = 2 * x + 1
+
+        xticks.append((x_apo, ' '.join(key + ('apo',))))
+        xticks.append((x_holo, ' '.join(key + ('holo',))))
+
+        y_apo = np.mean(apos)
+        y_apo_err = np.std(apos)
+        y_holo = np.mean(holos)
+        y_holo_err = np.std(holos)
+
+        ax.plot([x_apo,x_apo], [0,y_apo], color=colors[key], **style)
+        ax.plot([x_holo,x_holo], [0,y_holo], color=colors[key], **style)
+
+        ax.errorbar([x_apo], [y_apo], y_apo_err, color=colors[key])
+        ax.errorbar([x_holo], [y_holo], y_holo_err, color=colors[key])
+
+    xticks, xticklabels = zip(*xticks)
+    ax.set_xlim(xticks[0] - 0.5, xticks[-1] + 0.5)
+    ax.set_xticks(xticks)
+    ax.set_xticklabels(xticklabels, rotation='vertical')
+    ax.set_ylabel('Miller Units')
+    ax.set_ylim(0, ax.get_ylim()[1])
+    ax.yaxis.set_major_locator(FoldChangeLocator(6))
+    ax.yaxis.grid()
+
+    fig.tight_layout()
+    finalize_plot(fig, stem, 'fold')
+
+def plot_fold_changes(rxns, stem, figure_mode=False):
+    primary_keys, secondary_keys = load_keys(rxns)
+    n1, n2 = len(primary_keys), len(secondary_keys)
+
+    fig, ax = plt.subplots(figsize=(1 + 1 * len(primary_keys), 3))
+    style = dict(linewidth=5)
+    xticks = []
+
+    apos = {}
+    holos = {}
+    miller_units = {False: [], True: []}
+    fold_changes = {}
+
+    replicates = {}
+    colors = {}
+    
+    for i, rxn in iter_reactions(rxns):
+        colors[rxn.key] = pick_color(rxn.sgrna)
+        replicates.setdefault(rxn.key, {})\
+                  .setdefault(rxn.ligand, [])\
+                  .append(rxn)
+
+    for key in replicates:
+        apos = np.array([x.miller for x in replicates[key][False]])
+        holos = np.array([x.miller for x in replicates[key][True]])
+        fold_changes = holos / apos
 
         #i = primary_keys[key[0]]
         #j = secondary_keys[key[1]]
@@ -546,8 +636,10 @@ def plot_fold_changes(rxns, stem):
         # For visualization purposes, I always want the fold_change to be 
         # greater than one.  But I don't want to enforce this until after the 
         # mean fold change has been calculated.
+        if np.mean(fold_changes) < 1:
+            fold_changes = 1 / fold_changes
+
         y = np.mean(fold_changes)
-        if y < 1: y = 1/y
         yerr = np.std(fold_changes)
 
         ax.plot([x,x], [0,y], color=colors[key], **style)
@@ -565,7 +657,7 @@ def plot_fold_changes(rxns, stem):
     finalize_plot(fig, stem, 'fold')
 
 def finalize_plot(fig, stem, suffix):
-    fig.tight_layout()
+    #fig.tight_layout()
 
     def px_from_top(dy):
         y_disp, _ = fig.transFigure.transform((1,0)) - dy
@@ -604,10 +696,10 @@ if __name__ == '__main__':
     rxns = load_reactions(expts)
 
     if not args['--bars-only']:
-        plot_fits(rxns, out, args['--subtract-intercept'])
+        plot_fits(rxns, out, args['--subtract-intercept'], args['--figure-mode'])
     if not args['--fits-only']:
-        plot_miller_units(rxns, out)
-        plot_fold_changes(rxns, out)
+        plot_miller_units(rxns, out, args['--figure-mode'])
+        plot_fold_changes(rxns, out, args['--figure-mode'])
 
     try: plt.show()
     except KeyboardInterrupt: print()
