@@ -2,7 +2,7 @@
 
 """\
 Usage:
-    line_plot.py <toml> [options]
+    gfp_mrna_vs_time.py <toml> [options]
 
 Arguments:
     <toml>
@@ -41,7 +41,8 @@ from sgrna_sensor.style import pick_style, pick_data_style
 def load_data(toml_path, drop_outliers):
     attrs = ['primers', 'sgrna', 'ligand', 'time']
     query = 'outlier == False' if drop_outliers else None
-    df, _ = qpcr.load(toml_path, query=query, aggregate=attrs, reference='16s')
+    genes = dict(expt='gfp', ref='16s')
+    df, _ = qpcr.load(toml_path, query=query, aggregate=attrs, genes=genes)
     df.reset_index(level='time', inplace=True)
 
     minutes = df['time'].apply(lambda x: x.minute + x.second/60)

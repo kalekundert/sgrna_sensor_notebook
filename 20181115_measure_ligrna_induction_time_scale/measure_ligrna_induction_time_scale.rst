@@ -23,11 +23,12 @@ Notes
 =====
 - Possible controls:
 
-  - No-template control.  Possibly redundant
+  - No-template control (NTC, no-cDNA).  Possibly redundant
 
-  - No-reverse-transcriptase control (tests for contamination by gDNA).
+  - No-reverse-transcriptase control (NRT, no-RT): tests for contamination by 
+    gDNA.
 
-  - MG1655 without GFP or RFP.  This controls against non-specific 
+  - MG1655 without GFP or RFP (no-GFP).  This controls against non-specific 
     amplification (would corroborate melting curves).  Possibly makes the 
     no-template control redundant.
 
@@ -38,6 +39,10 @@ Notes
   - Positive control (gfp/off)
 
   - Negative control (gfp/on)
+
+  .. update:: 2018/12/19
+
+      I ended up doing only the NTC, the NRT, and the MG1655−GFP controls.
    
 - How many samples do I plan to run?  This might affect my decision about 
   whether to use 96- or 384-well plates:
@@ -58,6 +63,27 @@ Notes
 
   Note that this doesn't include any of the aforementioned controls.  But I 
   could do those on a separate plate.
+
+  .. update:: 2018/12/19
+
+     I ended up organizing the experiment rather differently than I had planned 
+     above:
+      
+     - 10 timepoints (0, 2:00, 4:20, 7:00, 10:00, 13:20, 17:00, 21:00, 25:20, 
+       30:00) (each timepoint is an additional 0:20 longer than the previous).  
+
+     - 2 constructs: rxb/11/1 and mhf/30 only.  I decided that for this 
+       experiment, apo→apo and holo→holo with the ligRNAs themselves was a 
+       better control than using the on/off sgRNAs.
+       
+     - 4 ligand conditions: apo→apo, apo→holo, holo→apo, holo→holo
+
+     - 3 controls: no-cDNA, no-RT, no-GFP
+
+     With the same number of primer pairs and technical replicates as planned 
+     above (and considering that there are only two ligand conditions for the 
+     0:00 timepoint), this adds up to 474 qPCR reactions.  I did them on two 
+     384-well plates: one for rxb/11/1, and one for mhf/30.
 
 - Does TRIzol kill cells?  I needed to be sure that it does, because the first 
   step of the RNA extraction protocol is a 5 min incubation in TRIzol (before 
