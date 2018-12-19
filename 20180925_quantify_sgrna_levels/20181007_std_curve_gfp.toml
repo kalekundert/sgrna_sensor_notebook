@@ -1,0 +1,47 @@
+[plate]
+  spacer = 'g1'
+  sgrna = 'off'
+  promoter = 'j23119'
+  ligand = false
+  discard = false
+
+[row.C]
+  dilution = 100000
+[row.D]
+  dilution = 10000
+[row.E]
+  dilution = 1000
+[row.F]
+  dilution = 100
+[row.G]
+  dilution = 10
+[row.H]
+  dilution = 1
+
+[col.4]
+  primers = 'ihfB'
+  replicate = 1
+[col.5]
+  primers = 'ihfB'
+  replicate = 2
+[col.6]
+  primers = 'ihfB'
+  replicate = 3
+[col.7]
+  primers = 'gfp'
+  replicate = 1
+[col.8]
+  primers = 'gfp'
+  replicate = 2
+[col.9]
+  primers = 'gfp'
+  replicate = 3
+[col.10]
+  primers = '16s'
+  replicate = 1
+[col.11]
+  primers = '16s'
+  replicate = 2
+[col.12]
+  primers = '16s'
+  replicate = 3
