@@ -1,4 +1,3 @@
-
 1. Start 1 mL overnight cultures for:
 
    - One ligRNA (e.g. rxb/11/1 or mhf/30): LB + Carb 
@@ -36,12 +35,16 @@
      - Wipe surface with ethanol and RNaseZap
      - Benchtop centrifuge
      - 37°C block with at least 38 slots.
+     - Timer
      - Tube racks
      - 8-channel P1000
      - Three boxes of P1000 tips, two with tips only 
        in every other row
+     - Repeater pipet
+     - 10 mL repeater tips
      - Waste beaker (for media)
      - Waste container (for TRIzol)
+     - Glass dish (for TRIzol)
 
    - Just before starting the next step:
      - Fill a glass dish with 50 mL TRIzol.
@@ -52,7 +55,7 @@
    and holo media (4 combinations):
 
    - Pipet 1 mL of each day culture into a properly 
-     labeled tube.
+     labeled tube (in the 37°C block).
 
    - Pellet at 16,000g for 30s.
 
