@@ -1,1 +1,0 @@
-/home/kale/research/projects/201511_sgrna_sensor_local/data/plate_reader/20180921_pseudomonas_growt_curve_mic.txt
